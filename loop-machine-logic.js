@@ -15,6 +15,7 @@ var playButtonId = "playButton";
 var stopButtonId = "stopButton";
 var recButtonId = "recButton";
 var playRecordingButtonId = "playRecording";
+var loadRecording = "loadRecording";
 
 var musicSynchronizer = {startPlayingTime : 0, numOfPadsPlaying : 0, loopInterval : 0};
 
@@ -127,8 +128,8 @@ function startPlayRecording(){
     
     recordPlayer.startPlayingRecordingTime = new Date().getTime();
     changeButtonTextAndColor(playRecordingButtonId, "Stop Playig", "red");
-    changeAllPadsDisabledState()
-    
+    setButtonDisabledStateWhilePlayRecording(true);
+    stopClicked(false);
     resetAllPads();
     setAllStartingPads();
     reproductionAllOnNonWaitingPads();
@@ -152,11 +153,21 @@ function startPlayRecording(){
     
 }
 
+function setButtonDisabledStateWhilePlayRecording(newState){
+    changeAllPadsDisabledState(newState);
+    changeButtonDisabledState(playButtonId,newState);
+    changeButtonDisabledState(stopButtonId,newState);
+    changeButtonDisabledState(recButtonId,newState);
+    changeButtonDisabledState(loadRecording,newState);
+}
+
 function stopPlayRecording(){
     
     changeButtonTextAndColor(playRecordingButtonId, "playRecording", "blue");
     recordPlayer.stopedPlayingRecordingTime = new Date().getTime();
     stopClicked(false);
+    setButtonDisabledStateWhilePlayRecording(false);
+    
 }
 
 function setAllStartingPads(){
