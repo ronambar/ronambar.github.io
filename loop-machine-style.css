@@ -1,0 +1,41 @@
+head {
+  background-color: skyblue;
+    
+}
+
+body {
+  background-color: skyblue;
+    color: black;
+
+
+}
+h1 {
+  color: black;
+    font-family:Tahoma ,sans-serif;
+    
+}
+h2 {
+  color: black;
+    font-family:Tahoma ,sans-serif;
+}
+
+button.Pad {
+	text-align: center;
+  	background-color : blue;
+}
+
+button.ManageButton{
+    
+    text-align: center;
+  	background-color : blue;
+}
+
+button.playRecording{
+    visibility: hidden;
+}
+
+button.loadRecording{
+    text-align: center;
+  	background-color : blue;
+}
+   

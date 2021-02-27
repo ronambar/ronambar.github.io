@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <h1>Welcome to my loop machine</h1>
+    <h2>Ron Ambar</h2>
+
+  <link rel="stylesheet" type="text/css" href="loop-machine-style.css">
+</head>
+
+<script>
+    var audioSrc = { 
+    "APad": "A_future_funk_beats.mp3", "BPad":"B_stutter_breakbeats.mp3",
+    "CPad": "C_Bass.mp3","DPad": "D_electric_guitar.mp3",
+    "EPad": "E_StompySlosh.mp3","FPad": "F_Tanggu.mp3","GPad": "G_MazePolitics.mp3","HPad": "H_groove.mp3","IPad": "I_organSynth.mp3"
+};
+    </script>
+    
+<body style="width:100%">
+    <audio id="AAudio"><source src="A_future_funk_beats.mp3" type="audio/mpeg"></audio> 
+    <audio id="BAudio"><source src="B_stutter_breakbeats.mp3" type="audio/mpeg"></audio>  
+    <audio id="CAudio"><source src="C_Bass.mp3" type="audio/mpeg"></audio> 
+    <audio id="DAudio"><source src="D_electric_guitar.mp3" type="audio/mpeg"></audio>  
+    <audio id="EAudio"><source src="E_StompySlosh.mp3" type="audio/mpeg"></audio>  
+    <audio id="FAudio"><source src="F_Tanggu.mp3" type="audio/mpeg"></audio>  
+    <audio id="GAudio"><source src="G_MazePolitics.mp3" type="audio/mpeg"></audio>  
+    <audio id="HAudio"><source src="H_groove.mp3" type="audio/mpeg"></audio>  
+    <audio id="IAudio"><source src="I_organSynth.mp3" type="audio/mpeg"></audio>
+    
+    <div style="width:100%">
+        <script src="loop-machine-logic.js"></script>
+
+ <div id="firstPads" >
+   <div> <button id="APad" class = "Pad" type="button" onclick="padClicked('APad')">A</button> </div>
+    <div> <button id="BPad" class = "Pad" type="button" onclick="padClicked('BPad')">B</button> </div>
+    <div><button id="CPad" class = "Pad" type="button" onclick="padClicked('CPad')">C</button> </div>
+            </div>
+        
+<div id="secoundPads" >
+   <div><button id="DPad" class = "Pad" type="button" onclick="padClicked('DPad')">D</button> </div>
+   <div><button id="EPad" class = "Pad" type="button" onclick="padClicked('EPad')">E</button> </div>
+    <div><button id="FPad" class = "Pad" type="button" onclick="padClicked('FPad')">F</button> </div>
+            </div>
+        
+<div id="thirdPads" style="width:33%">
+   <div> <button id="GPad" class = "Pad" type="button" onclick="padClicked('GPad')">G</button> </div>
+   <div> <button id="HPad" class = "Pad" type="button" onclick="padClicked('HPad')">H</button> </div>
+    <div> <button id="IPad" class = "Pad" type="button" onclick="padClicked('IPad')">I</button> </div>
+            </div>
+        
+    <div id="playPause" style="width:33%">
+<div> <button id="playButton" class = "ManageButton" type="button" onclick="playClicked()">Play</button> </div>
+<div> <button id="stopButton" class = "ManageButton" type="button" onclick="stopClicked(true)">Stop</button> </div>
+<div> <button id="recButton" class = "ManageButton" type="button" onclick="recButtonClicked()">Record</button> </div>
+<div> <button id="playRecording" class = "playRecording" type="button" onclick="playRecording()">Play Recording</button> </div>
+<div> <button id="loadRecording" class = "loadRecording" type="button" onclick="loadRecordingClicked()">Load Recording</button> </div>
+        </div>
+        </div>
+</body>
+</html>
