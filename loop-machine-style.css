@@ -17,8 +17,10 @@ body {
 h2.secHeader {
     text-align: center;
     color: white;
-    font-family: fantasy;
+    font-family: indie_flowerregular;
     text-shadow: 2px 5px 0 rgb(0 0 0 / 10%);
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 h1.firstHeader {
@@ -65,6 +67,8 @@ div#thirdPads {
 div#playStop {
     display: inline-flex;
     padding: 50px 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 button {
@@ -77,10 +81,9 @@ button {
     cursor: inherit;
 }
 
-
 div#recordContainer {
     display: inline-flex;
-    width: 100%;
+    width: 95%;
     justify-content: center;
 }
 
@@ -260,7 +263,9 @@ button#IPad {
     border-radius:10%;
 }
 
-
+.firstWarpper {
+    margin-top: 15px;
+}
 /**Display none to the buttons - will be activated with JS
 
 button#playRecording {
