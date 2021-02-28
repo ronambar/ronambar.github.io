@@ -1,4 +1,7 @@
 /*eslint-env es6*//*eslint-env browser*/
+
+
+// chaeck if update // 
 let padsDict = { 
     "APad":{state : "off",audioId : "AAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
     "BPad":{state : "off",audioId : "BAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
