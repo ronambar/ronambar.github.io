@@ -5,7 +5,7 @@ Upload Date: 28/02/2021
 Created by: Ron Ambar
 	
 Comments: 	
-	1. The application allows the user to play music using pad,
+	1. The application allows the user to play music using pad
 	and provides the abilities to record, save current state and load it.
 	2. When a pad is turned on, it start playing its loop on the next loop cycle.
 	3. When a pad is turned on Twice in a row, it start playing its loop immediately (extra feature).
