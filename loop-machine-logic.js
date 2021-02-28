@@ -1,7 +1,5 @@
 /*eslint-env es6*//*eslint-env browser*/
 
-
-// chaeck if update // 
 let padsDict = { 
     "APad":{state : "off",audioId : "AAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
     "BPad":{state : "off",audioId : "BAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
@@ -453,7 +451,6 @@ const playAndIncNumOfPeds=(soundToPlay)=>{
 const delayPlayAndIncNumOfPeds=(soundToPlay,delay)=>{
     
     musicSynchronizer.numOfPadsPlaying += 1;
-    //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
     soundToPlay.currentTime = delay/1000;
     soundToPlay.play();
 }
@@ -477,7 +474,6 @@ const syncedPause=(padId)=>{
     
     if(musicSynchronizer.numOfPadsPlaying > 0){
         musicSynchronizer.numOfPadsPlaying -= 1;
-        //alert("after -= 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
     }
     
     padsDict[padId].isWaiting = false;
@@ -593,23 +589,21 @@ const stopClicked=(isChangeColor)=>{
 const resetMusicSynchronizer=()=>{
     musicSynchronizer.startPlayingTime = 0;
     musicSynchronizer.numOfPadsPlaying = 0;
-    //alert("after reset => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
     musicSynchronizer.loopInterval = 0;
 }
 
 const setMusicSynchronizer=(soundToSetBy)=>{
     musicSynchronizer.startPlayingTime = new Date().getTime();
-    musicSynchronizer.loopInterval = soundToSetBy.duration * 1000; // pars to mili seconds
+    musicSynchronizer.loopInterval = soundToSetBy.duration * 1000; // pars to miliseconds
     musicSynchronizer.numOfPadsPlaying += 1;
-    //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
 }
 
 const setDelayMusicSynchronizer=(soundToSetBy, delay)=>{
     let timeNow = new Date().getTime();
-    musicSynchronizer.startPlayingTime =  timeNow - delay; ///- delay chaeck if work !!!!!!
-    musicSynchronizer.loopInterval = soundToSetBy.duration * 1000; // pars to mili seconds
+    musicSynchronizer.startPlayingTime =  timeNow - delay; 
+    musicSynchronizer.loopInterval = soundToSetBy.duration * 1000; // pars to miliseconds
     musicSynchronizer.numOfPadsPlaying += 1;
-    //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
+
 }
 
 const resetAllPads=()=>{

@@ -35,8 +35,6 @@ h1.firstHeader {
     -webkit-text-stroke-color: whitesmoke;
 }
 
-
-
 .MainContainer{
     display: flex;
     text-align: center;
@@ -88,7 +86,6 @@ div#recordContainer {
     justify-content: center;
 }
 
-
 button#stopButton {
     margin-left: 35px;
     background-image: url(https://image.flaticon.com/icons/png/512/1149/1149587.png);
@@ -98,7 +95,6 @@ button#stopButton {
     background-color: transparent;
     border-radius: 95%;
 }
-
 
 button#playButton {
     margin-right: 0px;
@@ -129,7 +125,6 @@ button#playButton {
     background-color: transparent;
     border-radius: 95%;
 }
-
 
 button#loadRecording {
     background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Circle-icons-download.svg/1024px-Circle-icons-download.svg.png);
@@ -267,30 +262,16 @@ button#IPad {
 .firstWarpper {
     margin-top: 15px;
 }
-/**Display none to the buttons - will be activated with JS
-
-button#playRecording {
-    display: none;
-}
-
-button#loadRecording {
-    display: none;
-}
- **/
-/*********/
-
 
 /**Mobile Query**/
 
 @media screen and (max-width: 600px){
     
-    
-    
     body {
         
        background-size: contain;  
     }
-/****new changes*****/   
+  
     div#playStop {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -323,8 +304,7 @@ button#loadRecording {
         width: 62px;
         height: 62px;
     }
-    
-/****end changes*****/   
+      
     div {
     display: inline-block;
 }
@@ -335,13 +315,12 @@ button#loadRecording {
        text-align: center;
 }
     
-div#secoundPads {
+    div#secoundPads {
     display: inline-block;
     margin: 10px auto;
        text-align: center;  
     
 }
-  
     
     div#thirdPads {
           display: inline-block;
@@ -357,12 +336,5 @@ div#secoundPads {
         height: 54px;
     width: 75px;
 }
-    
-    /****old vals****
-    .firstWarpper {
-    margin-top: 50px;
-    }
-    
-    ****************/
 
 }
