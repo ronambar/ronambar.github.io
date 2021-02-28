@@ -31,7 +31,7 @@ h1.firstHeader {
     -webkit-text-stroke-width: thin;
     -webkit-text-stroke-color: whitesmoke;
 }
-}
+
 
 
 .MainContainer{
@@ -282,10 +282,43 @@ button#loadRecording {
     
     body {
         
-        background-size: contain;
-        
+       background-size: contain;  
+    }
+/****new changes*****/   
+    div#playStop {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+    
+    .firstWarpper {
+    margin-top: 10px;
     }
     
+    button#storeRecording{
+        width:62px;
+        height: 62px;
+    }
+    
+    button#loadRecording{
+         
+        width: 62px;
+        height: 62px;
+    }
+    
+    button#playRecording{
+         
+        width: 62px;
+        height: 62px;
+    }
+    
+    button#recButton{
+         
+        width: 62px;
+        height: 62px;
+    }
+    
+/****end changes*****/   
     div {
     display: inline-block;
 }
@@ -315,13 +348,15 @@ div#secoundPads {
     margin-top: 10px;
         margin-right: 10px;
         margin-left: 0px;
+        height: 54px;
+    width: 75px;
 }
     
-    
+    /****old vals****
     .firstWarpper {
     margin-top: 50px;
-}
+    }
     
-    
-    
+    ****************/
+
 }
