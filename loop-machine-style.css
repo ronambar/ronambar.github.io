@@ -138,6 +138,17 @@ button#loadRecording {
     
 }
 
+button#storeRecording {
+    background-image: url(https://iconarchive.com/download/i103415/paomedia/small-n-flat/floppy.ico);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 57%;
+    background-color: transparent;
+    border-radius: 95%; 
+    display:inline-block;
+    
+}
+
 .playRecordingDefault {
     background-image: url(https://cdn3.iconfinder.com/data/icons/basic-colored/1024/video-512.png);
     background-repeat: no-repeat;

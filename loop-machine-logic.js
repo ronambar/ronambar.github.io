@@ -61,6 +61,7 @@ const updateButtonsByUserData=()=>{
     {
         setPlayRecordingButtonState("playRecordingOn");
         showPlayRecordingButton();
+        changeButtonDisabledState(playRecordingButtonId,false)
     }
     
 }
@@ -640,16 +641,21 @@ const changeManageButtonState=(buttonId)=>{
 
 const loadRecordingClicked=()=>{
     
-    if(isLoadRecordingAvailable == false){
-        storeUserData();
-        isLoadRecordingAvailable = true;
-    }
-    else
+    loadUserData();
+    updateButtonsByUserData();
+    
+}
+
+const storeRecordingClicked=()=>{
+
+    if(isLoadRecordingAvailable == false)
     {
-        loadUserData();
-        updateButtonsByUserData();
+        isLoadRecordingAvailable = true;
+        loadRecordingButton.disabled = false;
+        loadRecordingButton.style.visibility = "visible";
     }
     
+    storeUserData();
 }
 
 const changeButtonDisabledState=(buttonId,newState)=>{
@@ -718,12 +724,13 @@ const onloadFunction=()=>{
     let loadRecordingButton = document.getElementById(loadRecordingButtonId);
     let playRecordingButton = document.getElementById(playRecordingButtonId);
     
+    isLoadRecordingAvailable = window.localStorage.getItem("padsDict") != null
     playRecordingButton.disabled = true;
     playRecordingButton.style.visibility = "hidden";
     
     if(isLoadRecordingAvailable == false){
-    //    loadRecordingButton.disabled = true;
-    //    loadRecordingButton.style.visibility = "hidden";
+        loadRecordingButton.disabled = true;
+        loadRecordingButton.style.visibility = "hidden";
     }
 }
 
