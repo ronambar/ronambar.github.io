@@ -19,7 +19,6 @@ const playRecordingButtonId = "playRecording";
 const loadRecordingButtonId = "loadRecording";
 let isLoadRecordingAvailable = false;
 
-//let chacking = 0;
 
 let musicSynchronizer = {startPlayingTime : 0, numOfPadsPlaying : 0, loopInterval : 0};
 
@@ -160,8 +159,6 @@ const recButtonClicked=()=>{
     {
         loopRecorder.isRecording = true;
         setRecordButtonStateByRecordStatus(true);
-        //changeButtonTextAndColor(recButtonId, "Stop Recording", "red");
-        //booleanChangeButtonVisibility(playRecordingButtonId,false);
         setPlayRecordingButtonDisabledState(true);
         startRecord();
     } 
@@ -170,8 +167,6 @@ const recButtonClicked=()=>{
         loopRecorder.isRecording = false;
         setRecordButtonStateByRecordStatus(false);
         showPlayRecordingButton();
-        //changeButtonTextAndColor(recButtonId, "Record", "blue");
-        //booleanChangeButtonVisibility(playRecordingButtonId,true);
         setPlayRecordingButtonState("playRecordingOn");
         setPlayRecordingButtonDisabledState(false);
         endRecord();
@@ -286,7 +281,6 @@ const setButtonsDisabledStateWhilePlayRecord=(newState)=>{
 
 const stopPlayRecording=()=>{
     
-    //changeButtonTextAndColor(playRecordingButtonId, "playRecording", "blue");
     setPlayRecordingButtonState("playRecordingOn");
     recordPlayer.stopedPlayingRecordingTime = new Date().getTime();
     stopClicked(false);
