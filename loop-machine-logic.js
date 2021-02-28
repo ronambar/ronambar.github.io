@@ -17,7 +17,9 @@ const stopButtonId = "stopButton";
 const recButtonId = "recButton";
 const playRecordingButtonId = "playRecording";
 const loadRecordingButtonId = "loadRecording";
-let isLoadRecordingAvailable = true;
+let isLoadRecordingAvailable = false;
+
+//let chacking = 0;
 
 let musicSynchronizer = {startPlayingTime : 0, numOfPadsPlaying : 0, loopInterval : 0};
 
@@ -33,6 +35,118 @@ let recordPlayer = {
 }
 
 let musicStoper = {isStoped : false,lastClickedTime : 0} ;
+
+const storeUserData=()=>{
+    
+    storeOrLoadAllGlobalData("store");
+}
+
+const loadUserData=()=>{
+   
+    storeOrLoadAllGlobalData("load");
+}
+
+const updateButtonsByUserData=()=>{
+   
+    for (let padId in padsDict){
+        updatePadStyleByState(padId);
+    }
+    
+    if(recordPlayer.startPlayingRecordingTime == 0)
+    {
+        setPlayRecordingButtonState("playRecordingOff");
+        hidePlayRecordingButton();
+    }
+    else
+    {
+        setPlayRecordingButtonState("playRecordingOn");
+        showPlayRecordingButton();
+    }
+    
+}
+
+const updatePadStyleByState=(padId)=>{
+   
+    let padToUpdate = document.getElementById(padId);
+    
+    if(padsDict[padId].state == "off")
+    {
+        padToUpdate.style.backgroundColor = "deeppink";
+    }
+    else
+    {
+        padToUpdate.style.backgroundColor = "cornflowerblue";
+    }
+    
+}
+
+const storeOrLoadAllGlobalData=(dataQuery)=>{
+    storeOrLoadPadsDict(dataQuery);
+    storeOrLoadMusicSynchronizer(dataQuery);
+    storeOrLoadLoopRecorder(dataQuery);
+    storeOrLoadRecordPlayer(dataQuery);
+    storeOrLoadMusicStoper(dataQuery);
+}
+
+const storeOrLoadPadsDict=(dataQuery)=>{
+    if(dataQuery == "store")
+    {
+        window.localStorage.setItem("padsDict", JSON.stringify(padsDict));
+    }
+    else
+    {
+        JSONreturnVal = window.localStorage.getItem("padsDict");
+        padsDict = JSON.parse(JSONreturnVal);
+    }
+}
+
+const storeOrLoadMusicSynchronizer=(dataQuery)=>{
+    if(dataQuery == "store")
+    {
+        window.localStorage.setItem("musicSynchronizer", JSON.stringify(musicSynchronizer));
+    }
+    else
+    {
+        JSONreturnVal = window.localStorage.getItem("musicSynchronizer");
+        musicSynchronizer = JSON.parse(JSONreturnVal);
+    }
+}
+
+const storeOrLoadLoopRecorder=(dataQuery)=>{
+    if(dataQuery == "store")
+    {
+        window.localStorage.setItem("loopRecorder", JSON.stringify(loopRecorder));
+    }
+    else
+    {
+        JSONreturnVal = window.localStorage.getItem("loopRecorder");
+        loopRecorder = JSON.parse(JSONreturnVal);
+    }
+}
+
+const storeOrLoadRecordPlayer=(dataQuery)=>{
+    if(dataQuery == "store")
+    {
+        window.localStorage.setItem("recordPlayer", JSON.stringify(recordPlayer));
+    }
+    else
+    {
+        JSONreturnVal = window.localStorage.getItem("recordPlayer");
+        recordPlayer = JSON.parse(JSONreturnVal);
+    }
+}
+
+const storeOrLoadMusicStoper=(dataQuery)=>{
+    if(dataQuery == "store")
+    {
+        window.localStorage.setItem("musicStoper", JSON.stringify(musicStoper));
+    }
+    else
+    {
+        JSONreturnVal = window.localStorage.getItem("musicStoper");
+        musicStoper = JSON.parse(JSONreturnVal);
+    }
+}
 
 const isPlayRecording=()=>{
     
@@ -135,7 +249,6 @@ const playRecording=()=>{
 const startPlayRecording=()=>{
     
     recordPlayer.startPlayingRecordingTime = new Date().getTime();
-    //changeButtonTextAndColor(playRecordingButtonId, "Stop Playig", "red");
     setPlayRecordingButtonState("playRecordingOff");
     setButtonsDisabledStateWhilePlayRecord(true);
     stopClicked(false);
@@ -525,7 +638,19 @@ const changeManageButtonState=(buttonId)=>{
     
 }
 
-const loadRecordingClicked=()=>{}
+const loadRecordingClicked=()=>{
+    
+    if(isLoadRecordingAvailable == false){
+        storeUserData();
+        isLoadRecordingAvailable = true;
+    }
+    else
+    {
+        loadUserData();
+        updateButtonsByUserData();
+    }
+    
+}
 
 const changeButtonDisabledState=(buttonId,newState)=>{
 
@@ -579,6 +704,7 @@ const setPlayRecordingButtonDisabledState=(newDisableState)=>{
     }
     
 }
+
 const setPlayRecordingButtonState=(playRecordingNewState)=>{
     let playRecordingButton = document.getElementById(playRecordingButtonId);
     
@@ -588,7 +714,6 @@ const setPlayRecordingButtonState=(playRecordingNewState)=>{
     }
 }
 
-
 const onloadFunction=()=>{
     let loadRecordingButton = document.getElementById(loadRecordingButtonId);
     let playRecordingButton = document.getElementById(playRecordingButtonId);
@@ -596,16 +721,26 @@ const onloadFunction=()=>{
     playRecordingButton.disabled = true;
     playRecordingButton.style.visibility = "hidden";
     
-    if(isLoadRecordingAvailable == true){
-        loadRecordingButton.disabled = true;
-        loadRecordingButton.style.visibility = "hidden";
+    if(isLoadRecordingAvailable == false){
+    //    loadRecordingButton.disabled = true;
+    //    loadRecordingButton.style.visibility = "hidden";
     }
 }
 
 const showPlayRecordingButton=()=>{
     let playRecordingButton = document.getElementById(playRecordingButtonId);
+    
     if(playRecordingButton.style.visibility == "hidden")
     {
         playRecordingButton.style.visibility = "visible";
+    }
+}
+
+const hidePlayRecordingButton=()=>{
+    let playRecordingButton = document.getElementById(playRecordingButtonId);
+    
+    if(playRecordingButton.style.visibility == "visible")
+    {
+        playRecordingButton.style.visibility = "hidden";
     }
 }
