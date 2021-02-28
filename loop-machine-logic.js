@@ -52,7 +52,7 @@ const updateButtonsByUserData=()=>{
         updatePadStyleByState(padId);
     }
     
-    if(recordPlayer.startPlayingRecordingTime == 0)
+    if(loopRecorder.actionsLoop.length == 0)
     {
         setPlayRecordingButtonState("playRecordingOff");
         hidePlayRecordingButton();
@@ -647,7 +647,9 @@ const loadRecordingClicked=()=>{
 }
 
 const storeRecordingClicked=()=>{
-
+    
+    let loadRecordingButton = document.getElementById(loadRecordingButtonId);
+    
     if(isLoadRecordingAvailable == false)
     {
         isLoadRecordingAvailable = true;
