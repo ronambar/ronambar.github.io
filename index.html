@@ -2,10 +2,12 @@
 <html>
 
 <head>
-    <h1>Welcome to my loop machine</h1>
-    <h2>Ron Ambar</h2>
+    <h1 class="firstHeader">Welcome to my loop machine</h1>
+    <h2 class ="secHeader">Ron Ambar</h2>
 
   <link rel="stylesheet" type="text/css" href="loop-machine-style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <script>
@@ -16,7 +18,8 @@
 };
     </script>
     
-<body style="width:100%">
+<body style="width:100%" onload="onloadFunction()">
+    <div class="MainContainer">
     <audio id="AAudio"><source src="A_future_funk_beats.mp3" type="audio/mpeg"></audio> 
     <audio id="BAudio"><source src="B_stutter_breakbeats.mp3" type="audio/mpeg"></audio>  
     <audio id="CAudio"><source src="C_Bass.mp3" type="audio/mpeg"></audio> 
@@ -26,35 +29,51 @@
     <audio id="GAudio"><source src="G_MazePolitics.mp3" type="audio/mpeg"></audio>  
     <audio id="HAudio"><source src="H_groove.mp3" type="audio/mpeg"></audio>  
     <audio id="IAudio"><source src="I_organSynth.mp3" type="audio/mpeg"></audio>
+        
     
-    <div style="width:100%">
+    <div>
         <script src="loop-machine-logic.js"></script>
-
+<div class="firstWarpper">
  <div id="firstPads" >
-   <div> <button id="APad" class = "Pad" type="button" onclick="padClicked('APad')">A</button> </div>
-    <div> <button id="BPad" class = "Pad" type="button" onclick="padClicked('BPad')">B</button> </div>
-    <div><button id="CPad" class = "Pad" type="button" onclick="padClicked('CPad')">C</button> </div>
+   <div> <button id="APad" class = "Pad" type="button" onclick="padClicked('APad')"></button> </div>
+    <div> <button id="BPad" class = "Pad" type="button" onclick="padClicked('BPad')"></button> </div>
+    <div><button id="CPad" class = "Pad" type="button" onclick="padClicked('CPad')"></button> </div>
             </div>
-        
+    </div>    
+    
+    
+    <div class="secWarpper">
 <div id="secoundPads" >
-   <div><button id="DPad" class = "Pad" type="button" onclick="padClicked('DPad')">D</button> </div>
-   <div><button id="EPad" class = "Pad" type="button" onclick="padClicked('EPad')">E</button> </div>
-    <div><button id="FPad" class = "Pad" type="button" onclick="padClicked('FPad')">F</button> </div>
+   <div><button id="DPad" class = "Pad" type="button" onclick="padClicked('DPad')"></button> </div>
+   <div><button id="EPad" class = "Pad" type="button" onclick="padClicked('EPad')"></button> </div>
+    <div><button id="FPad" class = "Pad" type="button" onclick="padClicked('FPad')"></button> </div>
             </div>
         
-<div id="thirdPads" style="width:33%">
-   <div> <button id="GPad" class = "Pad" type="button" onclick="padClicked('GPad')">G</button> </div>
-   <div> <button id="HPad" class = "Pad" type="button" onclick="padClicked('HPad')">H</button> </div>
-    <div> <button id="IPad" class = "Pad" type="button" onclick="padClicked('IPad')">I</button> </div>
-            </div>
+        </div> 
         
-    <div id="playPause" style="width:33%">
-<div> <button id="playButton" class = "ManageButton" type="button" onclick="playClicked()">Play</button> </div>
-<div> <button id="stopButton" class = "ManageButton" type="button" onclick="stopClicked(true)">Stop</button> </div>
-<div> <button id="recButton" class = "ManageButton" type="button" onclick="recButtonClicked()">Record</button> </div>
-<div> <button id="playRecording" class = "playRecording" type="button" onclick="playRecording()">Play Recording</button> </div>
-<div> <button id="loadRecording" class = "loadRecording" type="button" onclick="loadRecordingClicked()">Load Recording</button> </div>
+        
+       <div class="thirdWarpper"> 
+<div id="thirdPads">
+   <div> <button id="GPad" class = "Pad" type="button" onclick="padClicked('GPad')"></button> </div>
+   <div> <button id="HPad" class = "Pad" type="button" onclick="padClicked('HPad')"></button> </div>
+    <div> <button id="IPad" class = "Pad" type="button" onclick="padClicked('IPad')"></button> </div>
+            </div>
+           </div>
+        
+    <div id="playStop">
+<div> <button id="playButton" class = "ManageButton" type="button" onclick="playClicked()"></button> </div>
+<div> <button id="stopButton" class = "ManageButton" type="button" onclick="stopClicked(true)"></button> </div>
+</div>       
+    <div id="recordContainer">
+       
+<div> <button id="playRecording" class = "playRecordingDefault" type="button" onclick="playRecording()"></button> </div>
+         <div class="recordButtonStart">
+<div> <button id="recButton" class = "recButtonDefault" type="button" onclick="recButtonClicked()"></button> </div>
+            </div>
+<div> <button id="loadRecording" class = "loadRecordingDefault" type="button" onclick="loadRecordingClicked()"></button> </div>
         </div>
         </div>
+    </div>
+    
 </body>
 </html>

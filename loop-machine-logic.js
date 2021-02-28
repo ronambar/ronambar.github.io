@@ -1,4 +1,5 @@
-var padsDict = { 
+/*eslint-env es6*//*eslint-env browser*/
+let padsDict = { 
     "APad":{state : "off",audioId : "AAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
     "BPad":{state : "off",audioId : "BAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
     "CPad":{state : "off",audioId : "CAudio", isWaiting : false, delayTime : -1, lastClickedTime : 0},
@@ -11,64 +12,71 @@ var padsDict = {
 };
 
 
-var playButtonId = "playButton";
-var stopButtonId = "stopButton";
-var recButtonId = "recButton";
-var playRecordingButtonId = "playRecording";
-var loadRecording = "loadRecording";
+const playButtonId = "playButton";
+const stopButtonId = "stopButton";
+const recButtonId = "recButton";
+const playRecordingButtonId = "playRecording";
+const loadRecordingButtonId = "loadRecording";
+let isLoadRecordingAvailable = true;
 
-var musicSynchronizer = {startPlayingTime : 0, numOfPadsPlaying : 0, loopInterval : 0};
+let musicSynchronizer = {startPlayingTime : 0, numOfPadsPlaying : 0, loopInterval : 0};
 
-var loopRecorder = { 
+let loopRecorder = { 
     isRecording : false,
     startTime : 0,
     actionsLoop : new Array()// {buttonId : padId, clickedTime : 0, delayTime : 0, isWaiting : isWaiting};
 };
 
-var recordPlayer = {
+let recordPlayer = {
     stopedPlayingRecordingTime : 0,
     startPlayingRecordingTime : 0,
 }
 
-var musicStoper = {isStoped : false,lastClickedTime : 0} ;
+let musicStoper = {isStoped : false,lastClickedTime : 0} ;
 
-function isPlayRecording(){
+const isPlayRecording=()=>{
     
     return recordPlayer.startPlayingRecordingTime > recordPlayer.stopedPlayingRecordingTime ;
 }
 
-function recButtonClicked(){
-   
-var recButton = document.getElementById(recButtonId);
-var playRecordingButton = document.getElementById(playRecordingButtonId);
+const recButtonClicked=()=>{
+
     if(loopRecorder.isRecording == false)
     {
         loopRecorder.isRecording = true;
-        changeButtonTextAndColor(recButtonId, "Stop Recording", "red");
-        booleanChangeButtonVisibility(playRecordingButtonId,false);// = "hidden";
+        setRecordButtonStateByRecordStatus(true);
+        //changeButtonTextAndColor(recButtonId, "Stop Recording", "red");
+        //booleanChangeButtonVisibility(playRecordingButtonId,false);
+        setPlayRecordingButtonDisabledState(true);
         startRecord();
     } 
     else
     {
         loopRecorder.isRecording = false;
-        changeButtonTextAndColor(recButtonId, "Record", "blue");
-        booleanChangeButtonVisibility(playRecordingButtonId,true);
+        setRecordButtonStateByRecordStatus(false);
+        showPlayRecordingButton();
+        //changeButtonTextAndColor(recButtonId, "Record", "blue");
+        //booleanChangeButtonVisibility(playRecordingButtonId,true);
+        setPlayRecordingButtonState("playRecordingOn");
+        setPlayRecordingButtonDisabledState(false);
         endRecord();
     }
 }
 
-function startRecord(){
+const startRecord=()=>{
     loopRecorder.actionsLoop = new Array();
     loopRecorder.startTime = new Date().getTime();
-    var index = 0;
-    var currWaitingStatus = false;
-    for (var padId in padsDict){
+    let index = 0;
+    let currWaitingStatus = false;
+    
+    for (let padId in padsDict){
+        
         if(padsDict[padId].state == "on")
         {
             index = getRecAtionLoopLen();
             currWaitingStatus = padsDict[padId].isWaiting;
-            var padSound = document.getElementById(padsDict[padId].audioId);
-            var delayTime = -1;
+            let padSound = document.getElementById(padsDict[padId].audioId);
+            let delayTime = -1;
             
             if(isAudioPlaying(padSound) == true)
             {
@@ -82,36 +90,36 @@ function startRecord(){
     }
 }
 
-function isAudioPlaying(audioToCheck){
+const isAudioPlaying=(audioToCheck)=>{
     return !audioToCheck.paused;
 }
 
-function endRecord(){
-   // loopRecorder.isRecording = false;
-    var index = getRecAtionLoopLen();
-    var timeOut = getCurrentRecTimeOffset();
+const endRecord=()=>{
+    let index = getRecAtionLoopLen();
+    let timeOut = getCurrentRecTimeOffset();
+    
     loopRecorder.actionsLoop[index] = {buttonId : stopButtonId, clickedTime : timeOut, delayTime : -1, isWaiting : false };
     loopRecorder.startTime = 0;
     stopClicked(false);
 }
     
-function getCurrentRecTimeOffset(){
-    var timeToReturn =  new Date().getTime() - loopRecorder.startTime;
+const getCurrentRecTimeOffset=()=>{
+    let timeToReturn =  new Date().getTime() - loopRecorder.startTime;
     return timeToReturn;
 }
 
-function updateRecorder(buttonId){
-    index = getRecAtionLoopLen();
-    time = getCurrentRecTimeOffset();
+const updateRecorder=(buttonId)=>{
+    let index = getRecAtionLoopLen();
+    let time = getCurrentRecTimeOffset();
     loopRecorder.actionsLoop[index] = 
                 {buttonId : buttonId ,clickedTime : time, delayTime: -1, isWaiting : false, lastClickedTime : 0};
 }
 
-function getRecAtionLoopLen(){
+const getRecAtionLoopLen=()=>{
     return loopRecorder.actionsLoop.length;
 }
 
-function playRecording(){
+const playRecording=()=>{
     
     if(isPlayRecording() == false)
     {
@@ -124,22 +132,23 @@ function playRecording(){
     
 }
 
-function startPlayRecording(){
+const startPlayRecording=()=>{
     
     recordPlayer.startPlayingRecordingTime = new Date().getTime();
-    changeButtonTextAndColor(playRecordingButtonId, "Stop Playig", "red");
-    setButtonDisabledStateWhilePlayRecording(true);
+    //changeButtonTextAndColor(playRecordingButtonId, "Stop Playig", "red");
+    setPlayRecordingButtonState("playRecordingOff");
+    setButtonsDisabledStateWhilePlayRecord(true);
     stopClicked(false);
     resetAllPads();
     setAllStartingPads();
     reproductionAllOnNonWaitingPads();
     reproductionAllWaitingPads();
     
-    var actionsArr= loopRecorder.actionsLoop;
-    var lastActionIndex = getRecAtionLoopLen();
-    for (var i in actionsArr){
-        var currButtonId = actionsArr[i].buttonId;   
-        var currTimeOut = actionsArr[i].clickedTime;
+    let actionsArr= loopRecorder.actionsLoop;
+    let lastActionIndex = getRecAtionLoopLen();
+    for (let i in actionsArr){
+        let currButtonId = actionsArr[i].buttonId;   
+        let currTimeOut = actionsArr[i].clickedTime;
         
         if( i == lastActionIndex-1)      // last play recording action -> stop() action 
         {
@@ -153,27 +162,28 @@ function startPlayRecording(){
     
 }
 
-function setButtonDisabledStateWhilePlayRecording(newState){
+const setButtonsDisabledStateWhilePlayRecord=(newState)=>{
     changeAllPadsDisabledState(newState);
     changeButtonDisabledState(playButtonId,newState);
     changeButtonDisabledState(stopButtonId,newState);
     changeButtonDisabledState(recButtonId,newState);
-    changeButtonDisabledState(loadRecording,newState);
+    changeButtonDisabledState(loadRecordingButtonId,newState);
 }
 
-function stopPlayRecording(){
+const stopPlayRecording=()=>{
     
-    changeButtonTextAndColor(playRecordingButtonId, "playRecording", "blue");
+    //changeButtonTextAndColor(playRecordingButtonId, "playRecording", "blue");
+    setPlayRecordingButtonState("playRecordingOn");
     recordPlayer.stopedPlayingRecordingTime = new Date().getTime();
     stopClicked(false);
-    setButtonDisabledStateWhilePlayRecording(false);
+    setButtonsDisabledStateWhilePlayRecord(false);
     
 }
 
-function setAllStartingPads(){
-    var actionsArr= loopRecorder.actionsLoop;
+const setAllStartingPads=()=>{
+    let actionsArr= loopRecorder.actionsLoop;
     
-    for (var i in actionsArr){
+    for (let i in actionsArr){
         if (actionsArr[i].clickedTime == 0) // stating action
         {
             updatePadsDictByRecAction(actionsArr[i]);
@@ -185,8 +195,8 @@ function setAllStartingPads(){
     }
 }
     
-function updatePadsDictByRecAction(recAction){
-    var padId = recAction.buttonId;
+const updatePadsDictByRecAction=(recAction)=>{
+    let padId = recAction.buttonId;
     
     padsDict[padId].state = "on";
     padsDict[padId].isWaiting = recAction.isWaiting;
@@ -194,19 +204,19 @@ function updatePadsDictByRecAction(recAction){
     padsDict[padId].lastClickedTime = new Date().getTime();
 }
 
-function playButtonByIdWithTimeOut(buttonId,timeOut){
+const playButtonByIdWithTimeOut=(buttonId,timeOut)=>{
     
-    var currTime = new Date().getTime();
-    setTimeout(function(){playButtonById(buttonId,currTime)},timeOut);
+    let currTime = new Date().getTime();
+    setTimeout(()=>{playButtonById(buttonId,currTime);},timeOut);
 }
 
-function finishPlayRecordingWithTimeOut(timeOut){
+const finishPlayRecordingWithTimeOut=(timeOut)=>{
     
-    var currTime = new Date().getTime();
-    setTimeout(function(){finisPlayRecording(currTime)},timeOut);
+    let currTime = new Date().getTime();
+    setTimeout(()=>{finisPlayRecording(currTime);},timeOut);
 }
 
-function finisPlayRecording(calledTime){
+const finisPlayRecording=(calledTime)=>{
     
     if(recordPlayer.startPlayingRecordingTime > calledTime ||
       recordPlayer.stopedPlayingRecordingTime > calledTime)
@@ -217,7 +227,7 @@ function finisPlayRecording(calledTime){
     stopPlayRecording();
 }
 
-function playButtonById(buttonId,calledTime){
+const playButtonById=(buttonId,calledTime)=>{
    
     if(recordPlayer.startPlayingRecordingTime > calledTime ||
       recordPlayer.stopedPlayingRecordingTime > calledTime){
@@ -237,15 +247,12 @@ function playButtonById(buttonId,calledTime){
         }
 }
 
-function padClicked(padId) {
+const padClicked=(padId)=> {
     musicStoper.isStoped = false;
     
     if(loopRecorder.isRecording == true){
             updateRecorder(padId);
     }
-    
-    var currPad = document.getElementById(padId);
-    var mySound = document.getElementById(padsDict[padId].audioId);
    
     if(padsDict[padId].state == "off")
     {
@@ -259,8 +266,8 @@ function padClicked(padId) {
     }
 }
 
-function updateClickedTimeByButtonId(buttonId){
-   var timetToUpdate = new Date().getTime();
+const updateClickedTimeByButtonId=(buttonId)=>{
+   let timetToUpdate = new Date().getTime();
     
     if(buttonId == stopButtonId){
         musicStoper.lastClickedTime = timetToUpdate;
@@ -271,25 +278,26 @@ function updateClickedTimeByButtonId(buttonId){
     }
 }
 
-function setPadState(padId,newState){
+const setPadState=(padId,newState)=>{
     
-    var currPad = document.getElementById(padId);
+    let currPad = document.getElementById(padId);
+    
     if(newState == "off")
     {
-        currPad.style.backgroundColor = "blue";
+        currPad.style.backgroundColor = "deeppink";
     }
     else
     {
-        currPad.style.backgroundColor = "red";
+        currPad.style.backgroundColor = "cornflowerblue";
         updateClickedTimeByButtonId(padId);
     }
    
     padsDict[padId].state = newState;
 }
 
-function syncedPlay(padId){
+const syncedPlay=(padId)=>{
     
-    var mySound = document.getElementById(padsDict[padId].audioId);
+    let mySound = document.getElementById(padsDict[padId].audioId);
     mySound.loop = true; 
     if(musicSynchronizer.numOfPadsPlaying == 0){
         setMusicSynchronizer(mySound);
@@ -298,10 +306,10 @@ function syncedPlay(padId){
     else
     {
         padsDict[padId].isWaiting = true ;
-        var timeOut = getCurrentSynchronizationTimeOut();
+        let timeOut = getCurrentSynchronizationTimeOut();
         if (timeOut != 0)
         {
-            setTimeout(function(){playIfNotStopedYet(padId,mySound)},timeOut);
+            setTimeout(()=>{playIfNotStopedYet(padId,mySound)},timeOut);
         }
         else
         {
@@ -310,14 +318,14 @@ function syncedPlay(padId){
     }
 }
 
-function getCurrentSynchronizationTimeOut(){
-    var currTime = new Date().getTime();
-    var timeOut = musicSynchronizer.loopInterval -  (currTime - musicSynchronizer.startPlayingTime) % musicSynchronizer.loopInterval;
+const getCurrentSynchronizationTimeOut=()=>{
+    let currTime = new Date().getTime();
+    let timeOut = musicSynchronizer.loopInterval -  (currTime - musicSynchronizer.startPlayingTime) % musicSynchronizer.loopInterval;
     
     return timeOut;
 }
 
-function playIfNotStopedYet(padId,mySound){
+const playIfNotStopedYet=(padId,mySound)=>{
     
     if(isPadStillNeedToPlay(padId))
     {
@@ -326,13 +334,12 @@ function playIfNotStopedYet(padId,mySound){
     }
 }
 
-function playAndIncNumOfPeds(soundToPlay){
+const playAndIncNumOfPeds=(soundToPlay)=>{
     musicSynchronizer.numOfPadsPlaying += 1;
-    //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
     soundToPlay.play();
 }
 
-function delayPlayAndIncNumOfPeds(soundToPlay,delay){
+const delayPlayAndIncNumOfPeds=(soundToPlay,delay)=>{
     
     musicSynchronizer.numOfPadsPlaying += 1;
     //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
@@ -340,22 +347,22 @@ function delayPlayAndIncNumOfPeds(soundToPlay,delay){
     soundToPlay.play();
 }
 
-function isPadStillNeedToPlay(padId){
+const isPadStillNeedToPlay=(padId)=>{
     
-    var isPadStillCorrecr = padsDict[padId].state == "on" && padsDict[padId].isWaiting == true;
-    var stoperCorrecr = musicStoper.isStoped == false && musicStoper.lastClickedTime < padsDict[padId].lastClickedTime;
+    let isPadStillCorrecr = padsDict[padId].state == "on" && padsDict[padId].isWaiting == true;
+    let stoperCorrecr = musicStoper.isStoped == false && musicStoper.lastClickedTime < padsDict[padId].lastClickedTime;
     
     return isPadStillCorrecr && stoperCorrecr ;
 }
 
-function stopSound(soundToStop){
+const stopSound=(soundToStop)=>{
     soundToStop.pause();
     soundToStop.currentTime = 0;
 }
 
-function syncedPause(padId){
+const syncedPause=(padId)=>{
     
-    var soundToStop = document.getElementById(padsDict[padId].audioId);
+    let soundToStop = document.getElementById(padsDict[padId].audioId);
     
     if(musicSynchronizer.numOfPadsPlaying > 0){
         musicSynchronizer.numOfPadsPlaying -= 1;
@@ -366,7 +373,7 @@ function syncedPause(padId){
     stopSound(soundToStop);
 }
 
-function playClicked(){
+const playClicked=()=>{
     
     if(loopRecorder.isRecording == true){
         updateRecorder(playButtonId);
@@ -377,13 +384,13 @@ function playClicked(){
     playAllOnPadsDirectly();
 }
 
-function playAllOnPadsDirectly(){
+const playAllOnPadsDirectly=()=>{
     
-   var isFirstPadToPlay = true;
-    for (var padId in padsDict){
+   let isFirstPadToPlay = true;
+    for (let padId in padsDict){
         if(padsDict[padId].state == "on")
         {
-            var currAudio = document.getElementById(padsDict[padId].audioId);
+            let currAudio = document.getElementById(padsDict[padId].audioId);
             
             if(isFirstPadToPlay == true)
             {
@@ -399,15 +406,15 @@ function playAllOnPadsDirectly(){
     }
 }
 
-function reproductionAllOnNonWaitingPads(){
+const reproductionAllOnNonWaitingPads=()=>{
     
-    var isFirstPadToPlay = true;
-    for (var padId in padsDict){
-       var currAudio = document.getElementById(padsDict[padId].audioId);
+    let isFirstPadToPlay = true;
+    for (let padId in padsDict){
+       let currAudio = document.getElementById(padsDict[padId].audioId);
         
         if(padsDict[padId].state == "on")
         {
-            var currDelayTime = padsDict[padId].delayTime;
+            let currDelayTime = padsDict[padId].delayTime;
             if(padsDict[padId].isWaiting == false && currDelayTime != -1) // need to be played directly
             {
                 if(isFirstPadToPlay == true)
@@ -420,15 +427,15 @@ function reproductionAllOnNonWaitingPads(){
                     delayPlayAndIncNumOfPeds(currAudio,currDelayTime);//withdelay
                 }
             }
-            document.getElementById(padId).style.backgroundColor = "red";
+            document.getElementById(padId).style.backgroundColor = "cornflowerblue";
         }
     }
 }
 
-function syncedDelayPlay(padId){
+const syncedDelayPlay=(padId)=>{
     
-    var mySound = document.getElementById(padsDict[padId].audioId); 
-    var currDelayTime = padsDict[padId].delayTime;
+    let mySound = document.getElementById(padsDict[padId].audioId); 
+    let currDelayTime = padsDict[padId].delayTime;
     
     setDelayMusicSynchronizer(mySound,currDelayTime);
     mySound.loop = true;
@@ -436,9 +443,9 @@ function syncedDelayPlay(padId){
     mySound.play();
 }
 
-function reproductionAllWaitingPads(){
+const reproductionAllWaitingPads=()=>{
     
-    for (var padId in padsDict){
+    for (let padId in padsDict){
         if(padsDict[padId].state == "on" && padsDict[padId].isWaiting == true)
         {
             syncedPlay(padId);
@@ -446,7 +453,7 @@ function reproductionAllWaitingPads(){
     }
 }
 
-function stopClicked(isChangeColor){
+const stopClicked=(isChangeColor)=>{
     
     if(loopRecorder.isRecording == true)
     {
@@ -463,38 +470,38 @@ function stopClicked(isChangeColor){
     }
     
     
-    for (var padId in padsDict){
+    for (let padId in padsDict){
         if(padsDict[padId].state == "on")
         {
-            var currAudio = document.getElementById(padsDict[padId].audioId); 
+            let currAudio = document.getElementById(padsDict[padId].audioId); 
             stopSound(currAudio);
         }
     }
 }
 
-function resetMusicSynchronizer(){
+const resetMusicSynchronizer=()=>{
     musicSynchronizer.startPlayingTime = 0;
     musicSynchronizer.numOfPadsPlaying = 0;
     //alert("after reset => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
     musicSynchronizer.loopInterval = 0;
 }
 
-function setMusicSynchronizer(soundToSetBy){
+const setMusicSynchronizer=(soundToSetBy)=>{
     musicSynchronizer.startPlayingTime = new Date().getTime();
     musicSynchronizer.loopInterval = soundToSetBy.duration * 1000; // pars to mili seconds
     musicSynchronizer.numOfPadsPlaying += 1;
     //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
 }
 
-function setDelayMusicSynchronizer(soundToSetBy, delay){
-    var timeNow = new Date().getTime();
+const setDelayMusicSynchronizer=(soundToSetBy, delay)=>{
+    let timeNow = new Date().getTime();
     musicSynchronizer.startPlayingTime =  timeNow - delay; ///- delay chaeck if work !!!!!!
     musicSynchronizer.loopInterval = soundToSetBy.duration * 1000; // pars to mili seconds
     musicSynchronizer.numOfPadsPlaying += 1;
     //alert("after += 1 => numOfPadsPlaying = " + musicSynchronizer.numOfPadsPlaying);
 }
 
-function resetAllPads(){
+const resetAllPads=()=>{
     
     musicStoper.isStoped = false;
     for (let padId in padsDict){
@@ -504,31 +511,29 @@ function resetAllPads(){
     }
 }
 
-function changeManageButtonState(buttonId){
+const changeManageButtonState=(buttonId)=>{
     
-    var newStateButton = document.getElementById(stopButtonId);;
-    var oppositeButton = document.getElementById(playButtonId);
+    let newStateButton = document.getElementById(stopButtonId);;
+    let oppositeButton = document.getElementById(playButtonId);
     
     if( buttonId == playButtonId)
     {
-        var tempItem = newStateButton;
+        let tempItem = newStateButton;
         newStateButton = oppositeButton;
         oppositeButton = tempItem;
     }
     
-    newStateButton.style.backgroundColor = "red";    
-    oppositeButton.style.backgroundColor = "blue";
 }
 
-function loadRecordingClicked(){}
+const loadRecordingClicked=()=>{}
 
-function changeButtonDisabledState(buttonId,newState){
+const changeButtonDisabledState=(buttonId,newState)=>{
 
     document.getElementById(buttonId).disabled = newState;
 }
 
-function booleanChangeButtonVisibility(buttonId,newState){
-    var stateToUpdate = "visible";
+const booleanChangeButtonVisibility=(buttonId,newState)=>{
+    let stateToUpdate = "visible";
     
     if(newState == false)
     {
@@ -538,17 +543,69 @@ function booleanChangeButtonVisibility(buttonId,newState){
     document.getElementById(buttonId).style.visibility = stateToUpdate;
 }
 
-function changeButtonTextAndColor(buttonId, newText, newColor){
+const changeButtonTextAndColor=(buttonId, newText, newColor)=>{
     
-    var buttonToChange = document.getElementById(buttonId);
+    let buttonToChange = document.getElementById(buttonId);
     buttonToChange.innerHTML = newText;
     buttonToChange.style.backgroundColor = newColor;
 }
 
-function changeAllPadsDisabledState(newState){
+const changeAllPadsDisabledState=(newState)=>{
     
-    for (var padId in padsDict){
+    for (let padId in padsDict){
         changeButtonDisabledState(padId,newState);
     }
 }
 
+const setRecordButtonStateByRecordStatus=(isRecording)=>{
+   
+    let recButton = document.getElementById(recButtonId);
+    
+    if(isRecording == true)
+    {
+        recButton.className = "recButtonClicked";
+    }
+    else
+    {
+        recButton.className = "recButtonDefault";
+    } 
+}
+
+const setPlayRecordingButtonDisabledState=(newDisableState)=>{
+    let playRecordingButton = document.getElementById(playRecordingButtonId);
+    
+    if(playRecordingButton.className != "playRecordingDefault"){
+        playRecordingButton.disabled = newDisableState;
+    }
+    
+}
+const setPlayRecordingButtonState=(playRecordingNewState)=>{
+    let playRecordingButton = document.getElementById(playRecordingButtonId);
+    
+    if(playRecordingNewState == "playRecordingOn" || recButton.className != "playRecordingDefault")
+    {
+        playRecordingButton.className = playRecordingNewState;
+    }
+}
+
+
+const onloadFunction=()=>{
+    let loadRecordingButton = document.getElementById(loadRecordingButtonId);
+    let playRecordingButton = document.getElementById(playRecordingButtonId);
+    
+    playRecordingButton.disabled = true;
+    playRecordingButton.style.visibility = "hidden";
+    
+    if(isLoadRecordingAvailable == true){
+        loadRecordingButton.disabled = true;
+        loadRecordingButton.style.visibility = "hidden";
+    }
+}
+
+const showPlayRecordingButton=()=>{
+    let playRecordingButton = document.getElementById(playRecordingButtonId);
+    if(playRecordingButton.style.visibility == "hidden")
+    {
+        playRecordingButton.style.visibility = "visible";
+    }
+}

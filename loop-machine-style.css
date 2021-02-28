@@ -1,41 +1,312 @@
+*{
+    font-family:Tahoma ,sans-serif;
+}
+
 head {
   background-color: skyblue;
     
 }
 
 body {
-  background-color: skyblue;
     color: black;
-
-
+    background-image: url(https://images.template.net/wp-content/uploads/2014/11/creative-music-platforms-backgrounds1.jpg);
 }
-h1 {
-  color: black;
-    font-family:Tahoma ,sans-serif;
+
+
+h2.secHeader {
+    text-align: center;
+    color: white;
+    font-family: fantasy;
+    text-shadow: 2px 5px 0 rgb(0 0 0 / 10%);
+}
+
+h1.firstHeader {
+    font-family: fantasy;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 600;
+    color: white;
+    text-shadow: 2px 5px 0 rgb(0 0 0 / 15%);
+}
+
+
+.MainContainer{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+div#firstPads {
+    text-align: left;
+    justify-content: left;
+}
+
+div#firstPads {
+    display: inline-flex;
+    margin: 10px auto;
+}
+
+
+div#secoundPads {
+    
+     display: inline-flex;
+    margin: 10px auto;
+}
+
+div#thirdPads {
+    display: inline-flex;
+    margin: 10px auto;
+}
+
+div#playStop {
+    display: inline-flex;
+    padding: 50px 0px;
+}
+
+button {
+    FONT-WEIGHT: 100;
+    margin-right: 71px;
+    margin-left: 71px;
+    height: 72px;
+    width: 100px;
+    border-radius: 5%;
+    cursor: inherit;
+}
+
+
+div#recordContainer {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+}
+
+
+button#stopButton {
+    margin-left: 35px;
+    background-image: url(https://image.flaticon.com/icons/png/512/1149/1149587.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 64%;
+    background-color: transparent;
+    border-radius: 95%;
+}
+
+
+button#playButton {
+    margin-right: 0px;
+    background-image: url(https://img.icons8.com/plasticine/2x/play-button-circled.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-color: transparent;
+    border-radius: 95%;
+  
+}
+
+.recButtonDefault{
+    background-image: url(https://image.flaticon.com/icons/png/512/440/440734.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    background-size: 64%;
+    background-color: transparent;
+    border-radius: 95%;
+}
+
+.recButtonClicked{
+    background-image: url(https://media3.giphy.com/media/D6EyPrcyIvVdPnCkCX/source.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    background-color: transparent;
+    border-radius: 95%;
+}
+
+
+button#loadRecording {
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Circle-icons-download.svg/1024px-Circle-icons-download.svg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 57%;
+    background-color: transparent;
+    border-radius: 95%; 
+    display:inline-block;
     
 }
-h2 {
-  color: black;
-    font-family:Tahoma ,sans-serif;
+
+.playRecordingDefault {
+    background-image: url(https://cdn3.iconfinder.com/data/icons/basic-colored/1024/video-512.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65%;
+    background-color: transparent;
+    border-radius: 95%;
+     display:inline-block;
 }
 
-button.Pad {
-	text-align: center;
-  	background-color : blue;
+.playRecordingOn {
+    background-image: url(https://cdn3.iconfinder.com/data/icons/basic-colored/1024/video-512.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65%;
+    background-color: transparent;
+    border-radius: 95%;
+    display:inline-block;
 }
 
-button.ManageButton{
+.playRecordingOff {
+    background-image: url(https://www.freeiconspng.com/thumbs/music-stop-icon/frame-music-player-stop-video-icon-3.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65%;
+    background-color: transparent;
+    border-radius: 95%;
+    display:inline-block;
+}
+
+button#APad {
+   background: url(https://www.shareicon.net/data/512x512/2016/09/01/823236_music_512x512.png);
+    background-color:deeppink;
+    background-size: 72%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10%;
+}
+
+button#BPad {
+   background: url(https://cdn0.iconfinder.com/data/icons/rock-n-roll-1/64/26-rythm-metronome-Tempo-electronics-beat-music-512.png);
+    background-color:deeppink;
+    background-size: 72%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10%;
+}
+
+button#CPad {
+    background: url(https://cdn3.iconfinder.com/data/icons/simple-transparent-guitars/100/Fender_P-Bass-512.png);
+    background-color:deeppink;
+    background-size: 59%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:10%;
+}
+
+button#DPad {
+    background: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/electric-guitar-2066205-1742581.png);
+    background-color:deeppink;
+    background-size: 59%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:10%;
+}
+
+button#EPad {
+    background: url(https://www.nicepng.com/png/full/78-781135_drum-set-comments-drum-icon-transparent.png);
+    background-color:deeppink;
+    background-size: 59%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:10%;
+}
+
+button#FPad {
+    background: url(https://image.flaticon.com/icons/png/512/24/24709.png);
+    background-color:deeppink;
+    background-size: 59%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:10%;
+}
+
+button#GPad {
+   background: url(https://cdn3.iconfinder.com/data/icons/electronic-music-production-outline/100/objects-09-512.png);
+    background-color:deeppink;
+    background-size: 72%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10%;
+}
+
+button#HPad {
+    background: url(https://icon-library.com/images/snare-drum-icon/snare-drum-icon-26.jpg);
+    background-color:deeppink;
+    background-size: 59%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:10%;
+}
+
+button#IPad {
+    background: url(https://cdn1.iconfinder.com/data/icons/music-instrument-18/128/organ-symphony-music-church-classical-512.png);
+    background-color:deeppink;
+    background-size: 59%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:10%;
+}
+
+
+/**Display none to the buttons - will be activated with JS
+
+button#playRecording {
+    display: none;
+}
+
+button#loadRecording {
+    display: none;
+}
+ **/
+/*********/
+
+
+/**Mobile Query**/
+
+@media screen and (max-width: 600px){
     
-    text-align: center;
-  	background-color : blue;
+    
+    
+    body {
+        
+        background-size: contain;
+        
+    }
+    
+    div {
+    display: inline-block;
 }
-
-button.playRecording{
-    visibility: hidden;
+    
+   div#firstPads {
+    display: inline-block;
+    margin: 10px auto;
+       text-align: center;
 }
-
-button.loadRecording{
-    text-align: center;
-  	background-color : blue;
+    
+div#secoundPads {
+    display: inline-block;
+    margin: 10px auto;
+       text-align: center;  
+    
 }
-   
+  
+    
+    div#thirdPads {
+          display: inline-block;
+    margin: 10px auto;
+       text-align: center;
+        
+}
+    
+    button {
+    margin-top: 10px;
+        margin-right: 10px;
+        margin-left: 0px;
+}
+    
+    
+    .firstWarpper {
+    margin-top: 50px;
+}
+    
+    
+    
+}
